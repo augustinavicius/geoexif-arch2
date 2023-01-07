@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--Header-->
+<head>
+    <!--GEOEXIF Title-->
+    <title>GEOEXIF</title>
+    <!--App Icon-->
+    <link rel="icon" type="image/x-icon" href="./images/icon.ico">
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="./styles/custom.css">
+    <!--SASS CSS-->
+    <link rel="stylesheet" href="./styles/sass.css">
+    <!--Leaflet CSS-->
+    <link rel="stylesheet" href="./styles/leaflet.css">
+    <!--Leaflet ZoomBox CSS-->
+    <link rel="stylesheet" href="./styles/leaflet-zoombox.css">
+    <!--Renderer JS-->
+    <script>require('./scripts/renderer.js')</script>
+</head>
+<!--Body-->
+<body>
+    <!--Modals-->
+    <!--Add Image Modal-->
+    <div class="modal" id="addImageModal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="field has-addons has-addons-right">
+                <p class="control is-expanded">
+                    <span class="select is-fullwidth">
+                        <select id="addImageScanType">
+                            <option value="images">Images</option>
+                            <option value="folders">Folders</option>
+                            <option value="foldersandsubfolders">Folders & Subfolders</option>
+                        </select>
+                    </span>
+                </p>
+                <p class="control">
+                    <a class="button is-primary" onclick="showOpenDialog()">
+                        Browse
+                    </a>
+                </p>
+            </div>
+            <div class="has-text-white" id="progressBarStatus">Standby</div>
+            <progress class="progress is-warning" value="0" max="0" id="progressBar"></progress>
+        </div>
+        <button class="modal-close is-large" aria-label="close" onclick="addImageModalClose()"></button>
+    </div>
+
+    <!--Main View-->
+    <div id="mainView">
+        <!--Navigation Bar-->
+        <div id="navbar">
+            <!--Photo List Header-->
+            <div id="photoListHeader">
+                <span style="float:right;">
+                    <button class="button is-primary is-small is-rounded is-inverted" onclick="addImageModalOpen()">
+                        <span class="icon is-small">
+                            <i class="fa-solid fa-plus"></i>
+                        </span>
+                    </button>
+                    <button class="button is-danger is-small is-rounded is-inverted" onclick="removeImage()">
+                        <span class="icon is-small">
+                            <i class="fa-solid fa-minus"></i>
+                        </span>
+                    </button>
+                </span>
+            </div>
+
+            <!--Photo List-->
+            <div class="list has-overflow-ellipsis" id="photoList">
+            </div>
+            <!--Navigation Bar Control-->
+            <button class="button is-small is-rounded m-2" onclick="navControl()" id="navbarControl">
+                <span class="icon is-small">
+                    <i class="fa-solid fa-chevron-left" id="navbarControlIcon"></i>
+                </span>
+            </button>
+        </div>
+        <!--Map View-->
+        <div id="mapView">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <!--AutoUpdate Footer Status Bar-->
+    <div id="footer">
+        <div class="content pl-1 pr-1 has-text-white is-size-7">
+            <span style="float:left;" id="footerUpdateText"></span>
+            <span style="float:right;" id="bottomRightStatusBar"></span>
+        </div>
+    </div>
+</body>
