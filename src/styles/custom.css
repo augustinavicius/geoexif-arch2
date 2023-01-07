@@ -18,30 +18,30 @@ body::-webkit-scrollbar {
     z-index: 2;
 }
 
-#photoListHeader {
+#imageListHeader {
     position: sticky;
     width: inherit;
-    height: 30px;
+    height: 40px;
     background-color: #1e2124;
 }
 
-#photoList {
+#imageList {
     height: inherit;
     width: inherit;
     background-color: #F5F5F5;
     overflow-y: scroll;
 }
 
-#photoList::-webkit-scrollbar-track {
+#imageList::-webkit-scrollbar-track {
     background-color: #F5F5F5;
 }
 
-#photoList::-webkit-scrollbar {
+#imageList::-webkit-scrollbar {
     width: 5px;
     background-color: #F5F5F5;
 }
 
-#photoList::-webkit-scrollbar-thumb {
+#imageList::-webkit-scrollbar-thumb {
     background-color: #7289da;
 }
 

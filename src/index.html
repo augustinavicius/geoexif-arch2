@@ -34,7 +34,7 @@
                     </span>
                 </p>
                 <p class="control">
-                    <a class="button is-primary" onclick="showOpenDialog()">
+                    <a class="button is-primary" onclick="renderer.openDialog()">
                         Browse
                     </a>
                 </p>
@@ -42,7 +42,7 @@
             <div class="has-text-white" id="progressBarStatus">Standby</div>
             <progress class="progress is-warning" value="0" max="0" id="progressBar"></progress>
         </div>
-        <button class="modal-close is-large" aria-label="close" onclick="addImageModalClose()"></button>
+        <button class="modal-close is-large" aria-label="close" onclick="renderer.closeAddImageModal()"></button>
     </div>
 
     <!--Main View-->
@@ -50,9 +50,17 @@
         <!--Navigation Bar-->
         <div id="navbar" style="resize: horizontal;">
             <!--Photo List Header-->
-            <div id="photoListHeader">
-                <span style="float:right;">
-                    <button class="button is-primary is-small is-rounded is-inverted" onclick="addImageModalOpen()">
+            <div id="imageListHeader">
+                <span style="float:left;" class="ml-1 mt-1">
+                    <button class="button is-small is-rounded">
+                        Select All
+                    </button>
+                    <button class="button is-small is-rounded">
+                        Inverse Selection
+                    </button>
+                </span>
+                <span style="float:right;" class="mr-1 mt-1">
+                    <button class="button is-primary is-small is-rounded is-inverted" onclick="renderer.openAddImageModal()">
                         <span class="icon is-small">
                             <i class="fa-solid fa-plus"></i>
                         </span>
@@ -66,7 +74,7 @@
             </div>
 
             <!--Photo List-->
-            <div class="list has-overflow-ellipsis" id="photoList">
+            <div class="list has-overflow-ellipsis" id="imageList">
             </div>
             <!--Navigation Bar Control-->
             <button class="button is-small is-rounded m-2" onclick="renderer.navBarControl()" id="navbarControl">

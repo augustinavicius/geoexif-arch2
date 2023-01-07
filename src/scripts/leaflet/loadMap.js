@@ -1,7 +1,9 @@
 // Leaflet
 const leaflet = require('leaflet');
 // Leaflet Zoombox
-const zoombox = require('leaflet-zoombox');
+require('leaflet-zoombox');
+// Leaflet Edge Buffer
+require('leaflet-edgebuffer');
 // Leaflet Map Grid Fix
 require('leaflet.tilelayer.nogap');
 
@@ -10,6 +12,7 @@ module.exports.loadMap = (map) => {
     map = leaflet.map('map', { // Define 'map' id
         attributionControl: false,
         touchZoom: true,
+        edgeBufferTiles: 5, // Preload tiles on the map view edges
         zoomControl: false // Added later with a changed position
     });
     map.setView([47.70, 13.35], 7); // Position & Zoom
@@ -29,4 +32,6 @@ module.exports.loadMap = (map) => {
     map.addControl(new leaflet.Control.Layers(mapLayers, mapOverlays)); // Map layers (maps) & overlays (gps traces)
 
     leaflet.control.zoom({ position: 'bottomright' }).addTo(map); // Modified zoom controls
+
+    return map;
 }

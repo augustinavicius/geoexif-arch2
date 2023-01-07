@@ -21,8 +21,8 @@ setupTitlebar();
 app.on('ready', () => {
     // Window
     window = new BrowserWindow({
-        width: 800,
-        minWidth: 800,
+        width: 900,
+        minWidth: 900,
         height: 600,
         minHeight: 600,
         frame: false, // False because a custom titlebar (frame) will be used
