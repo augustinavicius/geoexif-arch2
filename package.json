@@ -35,7 +35,8 @@
     "fast-exif": "^1.0.1",
     "leaflet": "^1.9.3",
     "leaflet-zoombox": "^0.5.2",
-    "leaflet.tilelayer.nogap": "^0.3.0"
+    "leaflet.tilelayer.nogap": "^0.3.0",
+    "simplebar": "^5.3.9"
   },
   "build": {
     "productName": "GEOEXIF",

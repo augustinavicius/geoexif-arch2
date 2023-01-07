@@ -14,7 +14,7 @@
     <!--Leaflet ZoomBox CSS-->
     <link rel="stylesheet" href="./styles/leaflet-zoombox.css">
     <!--Renderer JS-->
-    <script>require('./scripts/renderer.js')</script>
+    <script>const renderer = require('./scripts/renderer.js')</script>
 </head>
 <!--Body-->
 <body>
@@ -48,7 +48,7 @@
     <!--Main View-->
     <div id="mainView">
         <!--Navigation Bar-->
-        <div id="navbar">
+        <div id="navbar" style="resize: horizontal;">
             <!--Photo List Header-->
             <div id="photoListHeader">
                 <span style="float:right;">
@@ -69,7 +69,7 @@
             <div class="list has-overflow-ellipsis" id="photoList">
             </div>
             <!--Navigation Bar Control-->
-            <button class="button is-small is-rounded m-2" onclick="navControl()" id="navbarControl">
+            <button class="button is-small is-rounded m-2" onclick="renderer.navBarControl()" id="navbarControl">
                 <span class="icon is-small">
                     <i class="fa-solid fa-chevron-left" id="navbarControlIcon"></i>
                 </span>

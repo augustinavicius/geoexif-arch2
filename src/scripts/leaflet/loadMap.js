@@ -27,7 +27,6 @@ module.exports.loadMap = (map) => {
         "GPS Traces": leaflet.tileLayer('http://gps-{s}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png', { maxZoom: 19 })
     }
     map.addControl(new leaflet.Control.Layers(mapLayers, mapOverlays)); // Map layers (maps) & overlays (gps traces)
-    map.addControl(new leaflet.Control.ZoomBox({ modal: true, title: 'Box area zoom' })); // Map ZoomBox
 
     leaflet.control.zoom({ position: 'bottomright' }).addTo(map); // Modified zoom controls
 }
