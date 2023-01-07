@@ -33,7 +33,7 @@ module.exports.load = (map, loadedImages, loadedMarkers) => {
         if (!extNames.includes(path.extname(imagePath))) return;
 
         let imageList = document.getElementById('imageList');
-        let imageName = path.basename(imagePath);
+        let imageName;
         let imageExif = true;
         let imageGPS = true;
         let imageLatitude;
@@ -44,16 +44,18 @@ module.exports.load = (map, loadedImages, loadedMarkers) => {
             let exifData = await EXIF.read(imagePath);
 
             if (exifData == null) { // EXIF data does not exist
+                imageName = `[NO EXIF] ${path.basename(imagePath)}`;
                 imageExif = false;
                 imageLatitude = 0;
                 imageLongitude = 0;
             } else {                // EXIF data does exist
-                if (exifData.gps == undefined) { // GPS data does not exist
+                if (exifData.gps.GPSLatitude == undefined || exifData.gps.GPSLongitude == undefined || exifData.gps.GPSLatitudeRef == undefined || exifData.gps.GPSLongitudeRef == undefined) { // GPS data does not exist
+                    imageName = `[NO GPS] ${path.basename(imagePath)}`;
                     imageGPS = false;
                     imageLatitude = 0;
                     imageLongitude = 0;
-                } else {                        // GPS data does exist
-                    imageGPS = true;
+                } else {            // GPS data does exist
+                    imageName = path.basename(imagePath);
 
                     let latDegree = exifData.gps.GPSLatitude[0];
                     let latMinute = exifData.gps.GPSLatitude[1];
@@ -69,11 +71,16 @@ module.exports.load = (map, loadedImages, loadedMarkers) => {
                     imageLongitude = DMS2Decimal(longDegree, longMinute, longSecond, longDir);
 
                     imageMarker = new leaflet.Marker([imageLatitude, imageLongitude]);
-                    imageMarker.addTo(map);
+                    imageMarker.addTo(map).on('mousedown', () => { 
+                        document.getElementById(imagePath.replaceAll('\\', '\\\\')).querySelector('.list-item-title').querySelector('input').checked=true;
+                        document.getElementById(imagePath.replaceAll('\\', '\\\\')).scrollIntoView();
+                        selectedImages.push(imagePath);
+                    });
                 }
             }
-        } catch (error) {                       // Fatal Error
+        } catch (error) {           // Fatal Error
             imageName = `[ERROR] ${path.basename(imagePath)}`;
+            console.log(error);
         }
 
         loadedImages.push({
@@ -85,13 +92,16 @@ module.exports.load = (map, loadedImages, loadedMarkers) => {
             longitude: imageLongitude
         });
 
-        loadedMarkers.push(imageMarker);
+        loadedMarkers.push({
+            path: imagePath,
+            marker: imageMarker
+        });
 
         let imageEntry = `
         <div class="list-item">
-            <div class="list-item-content" id="${imagePath}">
+            <div class="list-item-content" id="${imagePath.replaceAll('\\', '\\\\')}">
                 <!--Photo Name-->
-                <div class="list-item-title"><input type="checkbox" class="mr-2" onclick="selectImage('${imagePath}')">${imageName}</div>
+                <div class="list-item-title"><input type="checkbox" class="mr-2" onclick="renderer.selectImage('${imagePath.replaceAll('\\', '\\\\')}')">${imageName}</div>
                 <!--Photo Path Array Here-->
                 <div class="list-item-description">${imagePath}</div>
             </div>
@@ -101,7 +111,7 @@ module.exports.load = (map, loadedImages, loadedMarkers) => {
                         <span class="icon is-small">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </span>
-                        <span onclick="openImage('${imagePath}')">Open</span>
+                        <span onclick="openImage('${imagePath.replaceAll('\\', '\\\\')}')">Open</span>
                     </button>
     
                     <button class="button">

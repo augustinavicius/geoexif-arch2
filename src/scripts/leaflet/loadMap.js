@@ -15,7 +15,7 @@ module.exports.loadMap = (map) => {
         edgeBufferTiles: 5, // Preload tiles on the map view edges
         zoomControl: false // Added later with a changed position
     });
-    map.setView([47.70, 13.35], 7); // Position & Zoom
+    map.setView([54.687157, 25.279652], 13); // Position & Zoom
 
     // Map Layers
     const mapLayers = {
