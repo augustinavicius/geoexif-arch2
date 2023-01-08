@@ -63,8 +63,8 @@ module.exports.openDialog = () => { require(__dirname + '/dialogs/openDialog.js'
 
 // IPC Renderer Events
 const { ipcRenderer } = require('electron');
-ipcRenderer.on('updatestatus', (event, text) => {
-    document.getElementById('footerUpdateStatus').innerHTML = text;
+ipcRenderer.on('updateStatus', (event, text) => {
+    document.getElementById('footerUpdateText').innerHTML = text;
 });
 
 // Excel
