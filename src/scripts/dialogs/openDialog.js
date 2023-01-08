@@ -71,12 +71,24 @@ module.exports.load = () => {
                     imageLatitude = DMS2Decimal(latDegree, latMinute, latSecond, latDir);
                     imageLongitude = DMS2Decimal(longDegree, longMinute, longSecond, longDir);
 
-                    imageMarker = new leaflet.Marker([imageLatitude, imageLongitude]);
-                    imageMarker.addTo(map).on('mousedown', () => { 
-                        document.getElementById(imagePath.replaceAll('\\', '\\\\')).querySelector('.list-item-title').querySelector('input').checked=true;
+                    imageMarker = new leaflet.Marker([imageLatitude, imageLongitude], { icon: markerIcon });
+                    imageMarker.addTo(map).on('mousedown', () => {
+                        // Scroll into View
                         document.getElementById(imagePath.replaceAll('\\', '\\\\')).scrollIntoView();
+
+                        // Update Cache
                         var image = loadedImages.find(image => image.path == imagePath);
-                        image.selected = true;
+                        if (image.selected) {
+                            image.selected = false;
+                            // Checkmark
+                            document.getElementById(imagePath.replaceAll('\\', '\\\\')).querySelector('.list-item-title').querySelector('input').checked = false;
+                            imageMarker.setIcon(markerIcon);
+                        } else {
+                            image.selected = true;
+                            // Checkmark
+                            document.getElementById(imagePath.replaceAll('\\', '\\\\')).querySelector('.list-item-title').querySelector('input').checked = true;
+                            imageMarker.setIcon(selectedMarkerIcon);
+                        }
                     });
                 }
             }
@@ -117,7 +129,7 @@ module.exports.load = () => {
                         <span onclick="openImage('${imagePath.replaceAll('\\', '\\\\')}')">Open</span>
                     </button>
     
-                    <button class="button">
+                    <button class="button" onclick="renderer.openImageOptionsModal('${imagePath.replaceAll('\\', '\\\\')}')">
                         <span class="icon is-small">
                             <i class="fas fa-ellipsis-h"></i>
                         </span>

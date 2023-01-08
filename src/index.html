@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!--Header-->
+
 <head>
     <!--GEOEXIF Title-->
     <title>GEOEXIF</title>
@@ -17,6 +18,7 @@
     <script>const renderer = require('./scripts/renderer.js')</script>
 </head>
 <!--Body-->
+
 <body>
     <!--Modals-->
     <!--Add Image Modal-->
@@ -44,6 +46,14 @@
         </div>
         <button class="modal-close is-large" aria-label="close" onclick="renderer.closeAddImageModal()"></button>
     </div>
+    <!--Image Options Modal-->
+    <div class="modal" id="imageOptionsModal">
+        <div class="modal-background"></div>
+        <div class="modal-content" id="imageOptionsModalContent">
+
+        </div>
+        <button class="modal-close is-large" aria-label="close" onclick="renderer.closeImageOptionsModal()"></button>
+    </div>
 
     <!--Main View-->
     <div id="mainView">
@@ -60,7 +70,8 @@
                     </button>
                 </span>
                 <span style="float:right;" class="mr-1 mt-1">
-                    <button class="button is-primary is-small is-rounded is-inverted" onclick="renderer.openAddImageModal()">
+                    <button class="button is-primary is-small is-rounded is-inverted"
+                        onclick="renderer.openAddImageModal()">
                         <span class="icon is-small">
                             <i class="fa-solid fa-plus"></i>
                         </span>

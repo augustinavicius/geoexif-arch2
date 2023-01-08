@@ -33,6 +33,7 @@
     "dotenv": "^16.0.3",
     "electron-updater": "^5.3.0",
     "fast-exif": "^1.0.1",
+    "haversine-distance": "^1.2.1",
     "leaflet": "^1.9.3",
     "leaflet-edgebuffer": "^1.0.6",
     "leaflet-zoombox": "^0.5.2",

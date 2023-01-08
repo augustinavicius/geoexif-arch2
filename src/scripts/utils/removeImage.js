@@ -17,7 +17,9 @@ module.exports.load = () => {
 
         // Remove Image Marker Data from Cache
         let imageMarker = loadedMarkers.find(image => image.path == imagePath);
-        map.removeLayer(imageMarker.marker);
-        loadedMarkers = loadedMarkers.filter((marker) => { return marker.path != imagePath });
+        if (imageMarker.marker) { // Marker exists (there is GPS data)
+            map.removeLayer(imageMarker.marker);
+            loadedMarkers = loadedMarkers.filter((marker) => { return marker.path != imagePath });
+        }
     }
 }
