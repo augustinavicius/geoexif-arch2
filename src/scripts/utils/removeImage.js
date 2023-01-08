@@ -1,3 +1,7 @@
+/*
+    Checks all loadedImages cache, checks if an image is selected and removes it from the
+    loadedImages cache, and if marker exists, from the loadedMarkers cache.
+*/
 module.exports.load = () => {
     var tempLoadedImages = loadedImages;
     for (var i = 0; i < tempLoadedImages.length; i++) {

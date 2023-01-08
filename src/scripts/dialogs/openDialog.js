@@ -16,6 +16,14 @@ function DMS2Decimal(degrees = 0, minutes = 0, seconds = 0, direction = 'N') {
 // File Paths
 const path = require('path');
 
+
+/*
+    Depending on the image scan type (3), a corresponding open file/folder dialog will be shown.
+    The file paths from the dialog are nested (subfolders) if needed, and passed to the 'processPath' function.
+    It checks if the file path is .jpg, .png, .jpeg, has exif, gps data. Then it will load it into the loadedImages cache
+    and loadedMarkers cache. Markers and images are seperated, since storing a marker in loadedImages cache can be quite
+    difficult or wasteless with the export/import process (might merge these caches depending on future results).
+*/
 module.exports.load = () => {
     var addImageScanType = document.getElementById('addImageScanType').value;
     if(document.getElementById('progressBarStatus').innerHTML != 'Standby') return;
@@ -153,7 +161,8 @@ module.exports.load = () => {
         var progressBar = document.getElementById('progressBar');
         var progressBarStatus = document.getElementById('progressBarStatus');
         var selection = dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'], filters: [{ name: 'Images', extensions: ["jpg", "png", "jpeg"] }] });
-
+        if (selection.length < 0) return;
+        
         progressBarStatus.innerHTML = 'Loading...';
         progressBar.classList.remove('is-primary');
         progressBar.classList.add('is-warning');

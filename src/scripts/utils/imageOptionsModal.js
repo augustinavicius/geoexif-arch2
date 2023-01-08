@@ -1,3 +1,6 @@
+/*
+    Dynamically generates a custom button (with input) for radius selection of points.
+*/
 module.exports.load = (imagePath) => {
     document.getElementById('imageOptionsModal').classList.add('is-active');
 

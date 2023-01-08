@@ -73,6 +73,7 @@ const { dialog } = require('@electron/remote');
 // Export
 ipcRenderer.on('menuItemExportExcel', (event, args) => {
     var savePath = dialog.showSaveDialogSync({ filters: [{ name: 'Excel file', extensions: ['xlsx'] }] });
+    if (savePath.length < 0) return;
     var parsedLoadedImages = [];
     for (var i = 0; i < loadedImages.length; i++) {
         let image = loadedImages[i];

@@ -1,3 +1,6 @@
+/*
+    Simply selects all images and changes marker style if one exists.
+*/
 module.exports.load = () => {
     for (var i = 0; i < loadedImages.length; i++) {
         let image = loadedImages[i];

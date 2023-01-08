@@ -1,6 +1,10 @@
 // Haversine Formula
 const haversine = require('haversine-distance');
 
+/*
+    Based on an already present point in the map, this function compares all points to the max
+    distance provided by the user, by using haversine formula.
+*/
 module.exports.load = (imagePath) => {
     var image = loadedImages.find(image => image.path == imagePath);
     var imageGPS = { latitude: image.latitude, longitude: image.longitude };

@@ -1,4 +1,6 @@
-// File Paths
+/*
+    Selects an image and updates that image marker style, if it exists.
+*/
 module.exports.load = (imagePath) => {
     var image = loadedImages.find(image => image.path == imagePath);
     var imageMarker = loadedMarkers.find(marker => marker.path == imagePath);

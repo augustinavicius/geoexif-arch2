@@ -1,3 +1,7 @@
+/*
+    Inverts all selections and changes markers if there is a corresponding one (image list might contains images, that do not have gps
+    data, therefore no marker).
+*/
 module.exports.load = () => {
     for (var i = 0; i < loadedImages.length; i++) {
         let image = loadedImages[i];
