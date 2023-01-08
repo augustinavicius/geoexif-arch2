@@ -1,6 +1,6 @@
 {
   "name": "geoexif",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Fast GPS EXIF data viewer with simple features.",
   "main": "app.js",
   "scripts": {
@@ -48,7 +48,7 @@
       "publish": [
         "github"
       ],
-      "publisherName": "Ignas Augustinavičius"
+      "publisherName": "Ignas Augustinavicius"
     },
     "nsis": {
       "oneClick": "false",
