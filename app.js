@@ -111,7 +111,7 @@ app.on('window-all-closed', () => {
 
 // App Updater Communications with renderer process
 function sendStatusToWindow(text) {
-    mainWindow.webContents.send('updateStatus', text);
+    window.webContents.send('updateStatus', text);
 }
 
 // App Updater Notifcations
