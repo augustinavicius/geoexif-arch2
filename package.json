@@ -38,7 +38,8 @@
     "leaflet-edgebuffer": "^1.0.6",
     "leaflet-zoombox": "^0.5.2",
     "leaflet.tilelayer.nogap": "^0.3.0",
-    "simplebar": "^5.3.9"
+    "simplebar": "^5.3.9",
+    "xlsx": "^0.18.5"
   },
   "build": {
     "productName": "GEOEXIF",

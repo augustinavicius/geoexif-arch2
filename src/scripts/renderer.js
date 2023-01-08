@@ -57,3 +57,41 @@ module.exports.navBarControl = () => { require(__dirname + '/utils/navBarControl
 
 // Open & Save Dialog Handlers
 module.exports.openDialog = () => { require(__dirname + '/dialogs/openDialog.js').load() };
+
+// IPC Renderer Events
+const { ipcRenderer } = require('electron');
+ipcRenderer.on('updatestatus', (event, text) => {
+    document.getElementById('footerUpdateStatus').innerHTML = text;
+});
+
+// Excel
+const xlsx = require('xlsx');
+const { dialog } = require('@electron/remote');
+// Export
+ipcRenderer.on('menuItemExportExcel', (event, args) => {
+    var savePath = dialog.showSaveDialogSync();
+    var parsedLoadedImages = [];
+    for (var i = 0; i < loadedImages.length; i++) {
+        let image = loadedImages[i];
+
+        parsedLoadedImages.push({
+            Name: image.name,
+            Path: image.path,
+            EXIF: image.exif,
+            GPS: image.gps,
+            Latitude: image.latitude,
+            Longitude: image.longitude
+        });
+    }
+
+    var workbook = xlsx.utils.book_new();
+    var worksheet = xlsx.utils.json_to_sheet(parsedLoadedImages);
+    for (var i = 0; i < loadedImages.length; i++) {
+        let imagePath = loadedImages[i].path;
+        let index = i +2;
+        worksheet[`A${index}`].l = { Target: `file://${imagePath}` }
+    }
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'data');
+
+    xlsx.writeFile(workbook, savePath);
+});

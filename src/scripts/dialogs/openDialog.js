@@ -5,7 +5,14 @@ const leaflet = require('leaflet');
 // EXIF
 const EXIF = require('fast-exif');
 // DMS 2 Decimal
-const { DMS2Decimal } = require('dms-to-decimal');
+function DMS2Decimal(degrees = 0, minutes = 0, seconds = 0, direction = 'N') {
+    const directions = ['N', 'S', 'E', 'W'];
+    if (!directions.includes(direction.toUpperCase())) return 0;
+
+    let decimal = degrees + (minutes / 60) + (seconds / 3600);
+    if (direction.toUpperCase() === 'S' || direction.toUpperCase() === 'W') decimal *= -1;
+    return decimal;
+}
 // File Paths
 const path = require('path');
 
@@ -44,6 +51,7 @@ module.exports.load = () => {
         try {
             let exifData = await EXIF.read(imagePath);
 
+
             if (exifData == null) { // EXIF data does not exist
                 imageName = `[NO EXIF] ${path.basename(imagePath)}`;
                 imageExif = false;
@@ -70,7 +78,6 @@ module.exports.load = () => {
 
                     imageLatitude = DMS2Decimal(latDegree, latMinute, latSecond, latDir);
                     imageLongitude = DMS2Decimal(longDegree, longMinute, longSecond, longDir);
-
                     imageMarker = new leaflet.Marker([imageLatitude, imageLongitude], { icon: markerIcon });
                     imageMarker.addTo(map).on('mousedown', () => {
                         // Scroll into View
