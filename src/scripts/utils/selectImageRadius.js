@@ -23,6 +23,8 @@ module.exports.load = (imagePath) => {
         }
     }
 
+    document.getElementById('imageOptionsModal').classList.remove('is-active')
+    
     // Functions 
     function showImageOptionsErrorBox(text) {
         document.getElementById('imageOptionsErrorBox').classList.remove('is-hidden');

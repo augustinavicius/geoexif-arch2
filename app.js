@@ -52,11 +52,11 @@ app.on('ready', () => {
                     label: 'Import',
                     submenu: [
                         {
-                            label: 'Import JSON',
+                            label: 'Import JSON (NOT IMPLEMENTED)',
                             click: () => { window.webContents.send('menuItemImportJSON') }
                         },
                         {
-                            label: 'Import Excel',
+                            label: 'Import Excel (NOT IMPLEMENTED)',
                             click: () => { window.webContents.send('menuItemImportExcel') }
                         },
                     ]
@@ -65,7 +65,7 @@ app.on('ready', () => {
                     label: 'Export',
                     submenu: [
                         {
-                            label: 'Export JSON',
+                            label: 'Export JSON (NOT IMPLEMENTED)',
                             click: () => { window.webContents.send('menuItemExportJSON') }
                         },
                         {

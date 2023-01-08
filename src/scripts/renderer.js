@@ -34,11 +34,12 @@ window.addEventListener("resize", () => { require(__dirname + '/utils/resizeCont
 // Open | Open Dialog Modal
 module.exports.openAddImageModal = () => { document.getElementById('addImageModal').classList.add('is-active') };
 // Close | Open Dialog Modal
-module.exports.closeAddImageModal = () => { document.getElementById('addImageModal').classList.remove('is-active') };
+module.exports.closeAddImageModal = () => { if (document.getElementById('progressBarStatus').innerHTML == 'Standby') document.getElementById('addImageModal').classList.remove('is-active') };
 // Open | Open Image Options Modal
 module.exports.openImageOptionsModal = (imagePath) => { require(__dirname + '/utils/imageOptionsModal.js').load(imagePath) };
 // Close | Open Image Options Modal
 module.exports.closeImageOptionsModal = () => { document.getElementById('imageOptionsModal').classList.remove('is-active') };
+
 module.exports.closeImageOptionsErrorBox = () => { document.getElementById('imageOptionsErrorBox').classList.add('is-hidden') };
 module.exports.selectImageRadius = (imagePath) => { require(__dirname + '/utils/selectImageRadius.js').load(imagePath) };
 
@@ -51,6 +52,8 @@ module.exports.selectAllImages = () => { require(__dirname + '/utils/selectAllIm
 module.exports.inverseImageSelection = () => { require(__dirname + '/utils/inverseImageSelection.js').load() };
 // Remove Image
 module.exports.removeImage = () => { require(__dirname + '/utils/removeImage.js').load() };
+// Open Image
+module.exports.openImage = (imagePath) => { require(__dirname + '/utils/openImage.js').load(imagePath) };
 
 // Navigation Bar Control Behaviour
 module.exports.navBarControl = () => { require(__dirname + '/utils/navBarControl.js').navBarControl() };
@@ -69,7 +72,7 @@ const xlsx = require('xlsx');
 const { dialog } = require('@electron/remote');
 // Export
 ipcRenderer.on('menuItemExportExcel', (event, args) => {
-    var savePath = dialog.showSaveDialogSync();
+    var savePath = dialog.showSaveDialogSync({ filters: [{ name: 'Excel file', extensions: ['xlsx'] }] });
     var parsedLoadedImages = [];
     for (var i = 0; i < loadedImages.length; i++) {
         let image = loadedImages[i];
@@ -88,7 +91,7 @@ ipcRenderer.on('menuItemExportExcel', (event, args) => {
     var worksheet = xlsx.utils.json_to_sheet(parsedLoadedImages);
     for (var i = 0; i < loadedImages.length; i++) {
         let imagePath = loadedImages[i].path;
-        let index = i +2;
+        let index = i + 2;
         worksheet[`A${index}`].l = { Target: `file://${imagePath}` }
     }
     xlsx.utils.book_append_sheet(workbook, worksheet, 'data');

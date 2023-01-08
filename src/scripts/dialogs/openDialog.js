@@ -18,6 +18,7 @@ const path = require('path');
 
 module.exports.load = () => {
     var addImageScanType = document.getElementById('addImageScanType').value;
+    if(document.getElementById('progressBarStatus').innerHTML != 'Standby') return;
     switch (addImageScanType) {
         case 'images':
             processImagesPaths();
@@ -133,7 +134,7 @@ module.exports.load = () => {
                         <span class="icon is-small">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </span>
-                        <span onclick="openImage('${imagePath.replaceAll('\\', '\\\\')}')">Open</span>
+                        <span onclick="renderer.openImage('${imagePath.replaceAll('\\', '\\\\')}')">Open</span>
                     </button>
     
                     <button class="button" onclick="renderer.openImageOptionsModal('${imagePath.replaceAll('\\', '\\\\')}')">
@@ -149,12 +150,25 @@ module.exports.load = () => {
     }
 
     async function processImagesPaths() {
+        var progressBar = document.getElementById('progressBar');
+        var progressBarStatus = document.getElementById('progressBarStatus');
         var selection = dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'], filters: [{ name: 'Images', extensions: ["jpg", "png", "jpeg"] }] });
 
+        progressBarStatus.innerHTML = 'Loading...';
+        progressBar.classList.remove('is-primary');
+        progressBar.classList.add('is-warning');
+        progressBar.max = selection.length;
+        progressBar.value = 0;
         for (var i = 0; i < selection.length; i++) {
             let imagePath = selection[i];
             await processPath(imagePath);
+
+            progressBar.value += 1;
         }
+        progressBar.classList.remove('is-warning');
+        progressBar.classList.add('is-primary');
+        progressBarStatus.innerHTML = 'Standby';
+        document.getElementById('addImageModal').classList.remove('is-active')
     }
 }
 
