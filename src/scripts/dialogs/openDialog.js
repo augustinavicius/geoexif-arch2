@@ -9,7 +9,7 @@ const { DMS2Decimal } = require('dms-to-decimal');
 // File Paths
 const path = require('path');
 
-module.exports.load = (map, loadedImages, loadedMarkers) => {
+module.exports.load = () => {
     var addImageScanType = document.getElementById('addImageScanType').value;
     switch (addImageScanType) {
         case 'images':
@@ -34,6 +34,7 @@ module.exports.load = (map, loadedImages, loadedMarkers) => {
 
         let imageList = document.getElementById('imageList');
         let imageName;
+        let imageSelected = false;
         let imageExif = true;
         let imageGPS = true;
         let imageLatitude;
@@ -74,7 +75,8 @@ module.exports.load = (map, loadedImages, loadedMarkers) => {
                     imageMarker.addTo(map).on('mousedown', () => { 
                         document.getElementById(imagePath.replaceAll('\\', '\\\\')).querySelector('.list-item-title').querySelector('input').checked=true;
                         document.getElementById(imagePath.replaceAll('\\', '\\\\')).scrollIntoView();
-                        selectedImages.push(imagePath);
+                        var image = loadedImages.find(image => image.path == imagePath);
+                        image.selected = true;
                     });
                 }
             }
@@ -85,6 +87,7 @@ module.exports.load = (map, loadedImages, loadedMarkers) => {
 
         loadedImages.push({
             name: imageName,
+            selected: imageSelected,
             path: imagePath,
             exif: imageExif,
             gps: imageGPS,

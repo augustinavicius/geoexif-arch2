@@ -7,7 +7,7 @@ require('leaflet-edgebuffer');
 // Leaflet Map Grid Fix
 require('leaflet.tilelayer.nogap');
 
-module.exports.loadMap = (map) => {
+module.exports.loadMap = () => {
     // Create Map
     map = leaflet.map('map', { // Define 'map' id
         attributionControl: false,

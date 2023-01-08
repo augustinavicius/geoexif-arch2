@@ -2,10 +2,9 @@
 const { loadMap } = require(__dirname + '/leaflet/loadMap.js');
 
 // Leaflet Map
-var map;
+global.map;
 
 // App Cache
-global.selectedImages = [];
 global.loadedImages = [];
 global.loadedMarkers = [];
 
@@ -23,10 +22,14 @@ module.exports.openAddImageModal = () => { document.getElementById('addImageModa
 // Close | Open Dialog Modal
 module.exports.closeAddImageModal = () => { document.getElementById('addImageModal').classList.remove('is-active') };
 // Select Image
-module.exports.selectImage = (imagePath) => { require(__dirname + '/utils/selectImage.js').load(selectedImages, imagePath) };
+module.exports.selectImage = (imagePath) => { require(__dirname + '/utils/selectImage.js').load(imagePath) };
+// Select All Images
+module.exports.selectAllImages = () => { require(__dirname + '/utils/selectAllImages.js').load() };
+// Inverse Image Selection
+module.exports.inverseImageSelection = () => { require(__dirname + '/utils/inverseImageSelection.js').load() };
 // Remove Image
-module.exports.removeImage = () => { require(__dirname + '/utils/removeImage.js').load(selectedImages, loadedImages, loadedMarkers, map); selectedImages = [] };
+module.exports.removeImage = () => { require(__dirname + '/utils/removeImage.js').load() };
 // Open & Save Dialog Handlers
-module.exports.openDialog = () => { require(__dirname + '/dialogs/openDialog.js').load(map, loadedImages, loadedMarkers, selectedImages) };
+module.exports.openDialog = () => { require(__dirname + '/dialogs/openDialog.js').load() };
 
-module.exports.test = () => { console.log(loadedImages, loadedMarkers, selectedImages )};
+module.exports.test = () => { console.log(loadedImages, loadedMarkers)};

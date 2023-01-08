@@ -1,11 +1,10 @@
 // File Paths
-module.exports.load = (selectedImages, imagePath) => {
-    var selected = selectedImages.find(tempImagePath => tempImagePath == imagePath);
+module.exports.load = (imagePath) => {
+    var image = loadedImages.find(image => image.path == imagePath);
 
-    if (selected) {
-        var index = selectedImages.indexOf(imagePath);
-        selectedImages.splice(index, 1);
+    if (image.selected) {
+        image.selected = false;
     } else {
-        selectedImages.push(imagePath);
+        image.selected = true;
     }
 }

@@ -1,18 +1,23 @@
-module.exports.load = (selectedImages, loadedImages, loadedMarkers, map) => {
-    selectedImages.forEach(imagePath => {
-        imagePath = imagePath.replaceAll('\\', '\\\\');
+module.exports.load = () => {
+    var tempLoadedImages = loadedImages;
+    for (var i = 0; i < tempLoadedImages.length; i++) {
+        // Image Var
+        let image = tempLoadedImages[i];
+        // Check if Selected
+        if (!image.selected) continue;
+
+        // Image Path
+        let imagePath = image.path;
+
         // Remove DIV
-        let imageEntry = document.getElementById(imagePath);
-        imageEntry.parentElement.remove();
+        document.getElementById(imagePath.replaceAll('\\', '\\\\')).parentElement.remove();
 
         // Remove Image Data from Cache
-        loadedImages = loadedImages.filter((image) => { return image.path.replaceAll('\\', '\\\\') != imagePath});
+        loadedImages = loadedImages.filter((image) => { return image.path != imagePath });
 
-        // Remove Image Marker from Cache
-        let imageMarker = loadedMarkers.find(image => image.path.replaceAll('\\', '\\\\') == imagePath);
+        // Remove Image Marker Data from Cache
+        let imageMarker = loadedMarkers.find(image => image.path == imagePath);
         map.removeLayer(imageMarker.marker);
-        loadedMarkers = loadedMarkers.filter((marker) => { return marker.path.replaceAll('\\', '\\\\') != imagePath});
-    });
-
-    return [];
+        loadedMarkers = loadedMarkers.filter((marker) => { return marker.path != imagePath });
+    }
 }
