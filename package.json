@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "electron .",
     "clean-modules": "modclean",
-    "build-app": "modclean && electron-builder build --win --publish never",
-    "deploy-app": "modclean && electron-builder build --win --publish always",
+    "build-app": "modclean -r && electron-builder build --win --publish never",
+    "deploy-app": "modclean -r && electron-builder build --win --publish always",
     "build-sass": "node-sass --omit-source-map-url styledefs.scss src/styles/sass.css"
   },
   "repository": {
