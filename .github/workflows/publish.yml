@@ -21,4 +21,4 @@ jobs:
       - name: Set env
         run: echo "GH_TOKEN=${{ secrets.github_token }}" >> $GITHUB_ENV
       - name: Build/release Electron app
-        run: npm deploy-app
+        run: npm run deploy-app
