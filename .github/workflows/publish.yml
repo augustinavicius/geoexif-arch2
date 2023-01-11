@@ -23,6 +23,6 @@ jobs:
 
       - name: Install node modules
         run: npm i
-        
+
       - name: Build/release Electron app
-        run: npm run deploy-app
+        run: GH_TOKEN=${{ secrets.github_token }} npm run deploy-app
