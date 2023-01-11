@@ -26,7 +26,7 @@ const path = require('path');
 */
 module.exports.load = () => {
     var addImageScanType = document.getElementById('addImageScanType').value;
-    if(document.getElementById('progressBarStatus').innerHTML != 'Standby') return;
+    if (document.getElementById('progressBarStatus').innerHTML != 'Standby') return;
     switch (addImageScanType) {
         case 'images':
             processImagesPaths();
@@ -67,12 +67,17 @@ module.exports.load = () => {
                 imageLatitude = 0;
                 imageLongitude = 0;
             } else {                // EXIF data does exist
-                if (exifData.gps.GPSLatitude == undefined || exifData.gps.GPSLongitude == undefined || exifData.gps.GPSLatitudeRef == undefined || exifData.gps.GPSLongitudeRef == undefined) { // GPS data does not exist
+                if (exifData.gps == undefined) {    // EXIF GPS data completly removed
                     imageName = `[NO GPS] ${path.basename(imagePath)}`;
                     imageGPS = false;
                     imageLatitude = 0;
                     imageLongitude = 0;
-                } else {            // GPS data does exist
+                } else if (exifData.gps.GPSLatitude == undefined || exifData.gps.GPSLongitude == undefined || exifData.gps.GPSLatitudeRef == undefined || exifData.gps.GPSLongitudeRef == undefined) {  // EXIF GPS data partially removed
+                    imageName = `[NO GPS] ${path.basename(imagePath)}`;
+                    imageGPS = false;
+                    imageLatitude = 0;
+                    imageLongitude = 0;
+                } else {    // EXIF & GPS Exists
                     imageName = path.basename(imagePath);
 
                     let latDegree = exifData.gps.GPSLatitude[0];
@@ -85,9 +90,12 @@ module.exports.load = () => {
                     let longSecond = exifData.gps.GPSLongitude[2];
                     let longDir = exifData.gps.GPSLongitudeRef;
 
+                    // Image & Marker Positioning
                     imageLatitude = DMS2Decimal(latDegree, latMinute, latSecond, latDir);
                     imageLongitude = DMS2Decimal(longDegree, longMinute, longSecond, longDir);
                     imageMarker = new leaflet.Marker([imageLatitude, imageLongitude], { icon: markerIcon });
+
+                    // Marker Controls
                     imageMarker.addTo(map).on('mousedown', () => {
                         // Scroll into View
                         document.getElementById(imagePath.replaceAll('\\', '\\\\')).scrollIntoView();
@@ -162,7 +170,7 @@ module.exports.load = () => {
         var progressBarStatus = document.getElementById('progressBarStatus');
         var selection = dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'], filters: [{ name: 'Images', extensions: ["jpg", "png", "jpeg"] }] });
         if (selection.length < 0) return;
-        
+
         progressBarStatus.innerHTML = 'Loading...';
         progressBar.classList.remove('is-primary');
         progressBar.classList.add('is-warning');
